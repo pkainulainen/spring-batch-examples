@@ -1,6 +1,6 @@
 This blog post is the example application of the blog post:
 
-* [Spring Batch Tutorial: Getting the Required Dependencies With Maven]() - Not published yet
+* [Spring Batch Tutorial: Getting the Required Dependencies With Maven](http://www.petrikainulainen.net/programming/spring-framework/spring-batch-tutorial-getting-the-required-dependencies-with-maven/)
 
 Prerequisites
 =============
