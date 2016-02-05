@@ -1,0 +1,58 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath (
+                'io.spring.gradle:dependency-management-plugin:0.5.4.RELEASE',
+                'org.akhikhl.gretty:gretty:+'
+        )
+    }
+}
+
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'org.akhikhl.gretty'
+
+gretty {
+    port = 8080
+    contextPath = '/'
+    servletContainer = 'jetty9'
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencyManagement {
+    imports {
+        mavenBom 'io.spring.platform:platform-bom:2.0.2.RELEASE'
+    }
+}
+
+dependencies {
+    compile(
+            'org.slf4j:slf4j-api',
+            'org.liquibase:liquibase-core',
+            'com.zaxxer:HikariCP',
+            'org.hibernate:hibernate-entitymanager',
+            'org.springframework.data:spring-data-jpa',
+            'org.springframework:spring-context-support',
+            'org.springframework:spring-webmvc',
+            'org.springframework.batch:spring-batch-core'
+
+    )
+    providedCompile(
+            'javax.servlet:javax.servlet-api'
+    )
+    runtime(
+            'log4j:log4j',
+            'org.slf4j:slf4j-log4j12',
+            'com.h2database:h2',
+            'org.springframework:spring-aspects'
+    )
+}
