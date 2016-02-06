@@ -1,6 +1,7 @@
-This blog post is the example application of the blog post:
+This blog post is the example application of the following blog posts:
 
 * [Spring Batch Tutorial: Getting the Required Dependencies With Maven](http://www.petrikainulainen.net/programming/spring-framework/spring-batch-tutorial-getting-the-required-dependencies-with-maven/)
+* [Spring Batch Tutorial: Getting the Required Dependencies With Gradle](http://www.petrikainulainen.net/programming/spring-framework/spring-batch-tutorial-getting-the-required-dependencies-with-gradle/)
 
 Prerequisites
 =============
