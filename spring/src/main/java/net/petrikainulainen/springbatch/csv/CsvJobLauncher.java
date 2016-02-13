@@ -1,4 +1,4 @@
-package net.petrikainulainen.springbatch.helloworld;
+package net.petrikainulainen.springbatch.csv;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,27 +22,27 @@ import java.util.Map;
  * @author Petri Kainulainen
  */
 @Component
-public class HelloWorldJobLauncher {
+public class CsvJobLauncher {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(HelloWorldJobLauncher.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CsvJobLauncher.class);
 
     private final Job job;
 
     private final JobLauncher jobLauncher;
 
     @Autowired
-    HelloWorldJobLauncher(Job job, JobLauncher jobLauncher) {
+    CsvJobLauncher(Job job, JobLauncher jobLauncher) {
         this.job = job;
         this.jobLauncher = jobLauncher;
     }
 
     @Scheduled(cron = "0 * * * * *")
-    void launchHelloWorldJob() throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
-        LOGGER.info("Starting hello world job");
+    void launchCSVJob() throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
+        LOGGER.info("Starting CSV job");
 
         jobLauncher.run(job, newExecution());
 
-        LOGGER.info("Stopping hello world job");
+        LOGGER.info("Stopping CSV job");
     }
 
     private JobParameters newExecution() {

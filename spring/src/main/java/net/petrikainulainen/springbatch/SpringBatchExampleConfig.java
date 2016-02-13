@@ -3,7 +3,7 @@ package net.petrikainulainen.springbatch;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import liquibase.integration.spring.SpringLiquibase;
-import net.petrikainulainen.springbatch.helloworld.HelloWorldJobConfig;
+import net.petrikainulainen.springbatch.csv.CsvJobConfig;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -34,7 +34,7 @@ import java.util.Properties;
 })
 @EnableScheduling
 @EnableTransactionManagement
-@Import({HelloWorldJobConfig.class})
+@Import({CsvJobConfig.class})
 @PropertySource("classpath:application.properties")
 public class SpringBatchExampleConfig {
 

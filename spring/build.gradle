@@ -36,6 +36,7 @@ dependencyManagement {
 
 dependencies {
     compile(
+            'org.apache.commons:commons-lang3',
             'org.slf4j:slf4j-api',
             'org.liquibase:liquibase-core',
             'com.zaxxer:HikariCP',
