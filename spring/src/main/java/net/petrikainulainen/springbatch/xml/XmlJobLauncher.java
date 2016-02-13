@@ -37,7 +37,7 @@ public class XmlJobLauncher {
         this.jobLauncher = jobLauncher;
     }
 
-    @Scheduled(cron = "30 * * * * *")
+    @Scheduled(cron = "${xml.job.cron}")
     void launchCSVJob() throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
         LOGGER.info("Starting XML job");
 

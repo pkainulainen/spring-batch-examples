@@ -37,7 +37,7 @@ public class CsvJobLauncher {
         this.jobLauncher = jobLauncher;
     }
 
-    @Scheduled(cron = "0 * * * * *")
+    @Scheduled(cron = "${csv.job.cron}")
     void launchCSVJob() throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
         LOGGER.info("Starting CSV job");
 
