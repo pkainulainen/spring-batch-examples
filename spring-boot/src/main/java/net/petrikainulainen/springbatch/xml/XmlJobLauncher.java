@@ -1,4 +1,4 @@
-package net.petrikainulainen.springbatch.helloworld;
+package net.petrikainulainen.springbatch.xml;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +11,7 @@ import org.springframework.batch.core.repository.JobExecutionAlreadyRunningExcep
 import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
 import org.springframework.batch.core.repository.JobRestartException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -22,27 +23,27 @@ import java.util.Map;
  * @author Petri Kainulainen
  */
 @Component
-public class HelloWorldJobLauncher {
+public class XmlJobLauncher {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(HelloWorldJobLauncher.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(XmlJobLauncher.class);
 
     private final Job job;
 
     private final JobLauncher jobLauncher;
 
     @Autowired
-    HelloWorldJobLauncher(Job job, JobLauncher jobLauncher) {
+    XmlJobLauncher(@Qualifier("xmlStudentJob") Job job, JobLauncher jobLauncher) {
         this.job = job;
         this.jobLauncher = jobLauncher;
     }
 
-    @Scheduled(cron = "0 * * * * *")
-    void launchHelloWorldJob() throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
-        LOGGER.info("Starting hello world job");
+    @Scheduled(cron = "${xml.job.cron}")
+    void launchCSVJob() throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
+        LOGGER.info("Starting XML job");
 
         jobLauncher.run(job, newExecution());
 
-        LOGGER.info("Stopping hello world job");
+        LOGGER.info("Stopping XML job");
     }
 
     private JobParameters newExecution() {

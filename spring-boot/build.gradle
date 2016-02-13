@@ -19,8 +19,10 @@ repositories {
 
 dependencies {
     compile(
+            'org.apache.commons:commons-lang3:3.4',
             'org.springframework.boot:spring-boot-starter-batch',
             'org.springframework.boot:spring-boot-starter-data-jpa',
+            'org.springframework:spring-oxm'
     )
     runtime(
             'org.liquibase:liquibase-core',
