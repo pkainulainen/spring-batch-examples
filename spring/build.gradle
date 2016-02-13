@@ -44,7 +44,8 @@ dependencies {
             'org.springframework.data:spring-data-jpa',
             'org.springframework:spring-context-support',
             'org.springframework:spring-webmvc',
-            'org.springframework.batch:spring-batch-core'
+            'org.springframework.batch:spring-batch-core',
+            'org.springframework:spring-oxm'
 
     )
     providedCompile(
