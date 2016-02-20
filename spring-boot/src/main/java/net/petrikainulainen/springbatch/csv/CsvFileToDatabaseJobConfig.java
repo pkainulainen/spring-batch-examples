@@ -18,6 +18,7 @@ import org.springframework.batch.item.file.mapping.DefaultLineMapper;
 import org.springframework.batch.item.file.mapping.FieldSetMapper;
 import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
 import org.springframework.batch.item.file.transform.LineTokenizer;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -27,12 +28,12 @@ import org.springframework.core.io.ClassPathResource;
  * @author Petri Kainulainen
  */
 @Configuration
-public class CsvJobConfig {
+public class CsvFileToDatabaseJobConfig {
 
     private static final String PROPERTY_CSV_SOURCE_FILE_PATH = "csv.job.source.file.path";
 
     @Bean
-    ItemReader<StudentDTO> csvItemReader(Environment environment) {
+    ItemReader<StudentDTO> csvFileItemReader(Environment environment) {
         FlatFileItemReader<StudentDTO> csvFileReader = new FlatFileItemReader<>();
         csvFileReader.setResource(new ClassPathResource(environment.getRequiredProperty(PROPERTY_CSV_SOURCE_FILE_PATH)));
         csvFileReader.setLinesToSkip(1);
@@ -69,31 +70,32 @@ public class CsvJobConfig {
     }
 
     @Bean
-    ItemProcessor<StudentDTO, StudentDTO> csvItemProcessor() {
+    ItemProcessor<StudentDTO, StudentDTO> csvFileItemProcessor() {
         return new LoggingStudentProcessor();
     }
 
     @Bean
-    ItemWriter<StudentDTO> csvItemWriter() {
+    ItemWriter<StudentDTO> csvFileItemWriter() {
         return new LoggingStudentWriter();
     }
 
     @Bean
-    Step csvStudentStep(ItemReader<StudentDTO> csvItemReader,
-                 ItemProcessor<StudentDTO, StudentDTO> csvItemProcessor,
-                 ItemWriter<StudentDTO> csvItemWriter,
-                 StepBuilderFactory stepBuilderFactory) {
-        return stepBuilderFactory.get("csvStudentStep")
+    Step csvFileToDatabaseStep(ItemReader<StudentDTO> csvFileItemReader,
+                               ItemProcessor<StudentDTO, StudentDTO> csvFileItemProcessor,
+                               ItemWriter<StudentDTO> csvFileItemWriter,
+                               StepBuilderFactory stepBuilderFactory) {
+        return stepBuilderFactory.get("csvFileToDatabaseStep")
                 .<StudentDTO, StudentDTO>chunk(1)
-                .reader(csvItemReader)
-                .processor(csvItemProcessor)
-                .writer(csvItemWriter)
+                .reader(csvFileItemReader)
+                .processor(csvFileItemProcessor)
+                .writer(csvFileItemWriter)
                 .build();
     }
 
     @Bean
-    Job csvStudentJob(JobBuilderFactory jobBuilderFactory, Step csvStudentStep) {
-        return jobBuilderFactory.get("csvStudentJob")
+    Job csvFileToDatabaseJob(JobBuilderFactory jobBuilderFactory,
+                             @Qualifier("csvFileToDatabaseStep") Step csvStudentStep) {
+        return jobBuilderFactory.get("csvFileToDatabaseJob")
                 .incrementer(new RunIdIncrementer())
                 .flow(csvStudentStep)
                 .end()

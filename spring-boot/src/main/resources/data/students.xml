@@ -2,7 +2,7 @@
     <student>
         <name>Tony Tester</name>
         <emailAddress>tony.tester@gmail.com</emailAddress>
-        <purchasedPackage></purchasedPackage>
+        <purchasedPackage>master</purchasedPackage>
     </student>
     <student>
         <name>Nick Newbie</name>
