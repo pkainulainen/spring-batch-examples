@@ -12,6 +12,7 @@ import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.xml.StaxEventItemReader;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -22,12 +23,12 @@ import org.springframework.oxm.jaxb.Jaxb2Marshaller;
  * @author Petri Kainulainen
  */
 @Configuration
-public class XmlJobConfig {
+public class XmlFileToDatabaseJobConfig {
 
     private static final String PROPERTY_XML_SOURCE_FILE_PATH = "xml.job.source.file.path";
 
     @Bean
-    ItemReader<StudentDTO> xmlItemReader(Environment environment) {
+    ItemReader<StudentDTO> xmlFileItemReader(Environment environment) {
         StaxEventItemReader<StudentDTO> xmlFileReader = new StaxEventItemReader<>();
         xmlFileReader.setResource(new ClassPathResource(environment.getRequiredProperty(PROPERTY_XML_SOURCE_FILE_PATH)));
         xmlFileReader.setFragmentRootElementName("student");
@@ -40,33 +41,34 @@ public class XmlJobConfig {
     }
 
     @Bean
-    ItemProcessor<StudentDTO, StudentDTO> xmlItemProcessor() {
+    ItemProcessor<StudentDTO, StudentDTO> xmlFileItemProcessor() {
         return new LoggingStudentProcessor();
     }
 
     @Bean
-    ItemWriter<StudentDTO> xmlItemWriter() {
+    ItemWriter<StudentDTO> xmlFileItemWriter() {
         return new LoggingStudentWriter();
     }
 
     @Bean
-    Step xmlStudentStep(ItemReader<StudentDTO> xmlItemReader,
-                        ItemProcessor<StudentDTO, StudentDTO> xmlItemProcessor,
-                        ItemWriter<StudentDTO> xmlItemWriter,
-                        StepBuilderFactory stepBuilderFactory) {
-        return stepBuilderFactory.get("xmlStudentStep")
+    Step xmlFileToDatabaseStep(ItemReader<StudentDTO> xmlFileItemReader,
+                               ItemProcessor<StudentDTO, StudentDTO> xmlFileItemProcessor,
+                               ItemWriter<StudentDTO> xmlFileItemWriter,
+                               StepBuilderFactory stepBuilderFactory) {
+        return stepBuilderFactory.get("xmlFileToDatabaseStep")
                 .<StudentDTO, StudentDTO>chunk(1)
-                .reader(xmlItemReader)
-                .processor(xmlItemProcessor)
-                .writer(xmlItemWriter)
+                .reader(xmlFileItemReader)
+                .processor(xmlFileItemProcessor)
+                .writer(xmlFileItemWriter)
                 .build();
     }
 
     @Bean
-    Job xmlStudentJob(JobBuilderFactory jobBuilderFactory, Step csvStudentStep) {
-        return jobBuilderFactory.get("xmlStudentJob")
+    Job xmlFileToDatabaseJob(JobBuilderFactory jobBuilderFactory,
+                             @Qualifier("xmlFileToDatabaseStep") Step xmlStudentStep) {
+        return jobBuilderFactory.get("xmlFileToDatabaseJob")
                 .incrementer(new RunIdIncrementer())
-                .flow(csvStudentStep)
+                .flow(xmlStudentStep)
                 .end()
                 .build();
     }

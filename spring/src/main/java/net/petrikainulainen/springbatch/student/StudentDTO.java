@@ -2,12 +2,15 @@ package net.petrikainulainen.springbatch.student;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * Contains the information of a single student who has purchased
  * the course.
  *
  * @author Petri Kainulainen
  */
+@XmlRootElement(name="student")
 public class StudentDTO {
 
     private String emailAddress;

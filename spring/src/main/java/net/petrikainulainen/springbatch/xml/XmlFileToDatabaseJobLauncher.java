@@ -1,4 +1,4 @@
-package net.petrikainulainen.springbatch.csv;
+package net.petrikainulainen.springbatch.xml;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,27 +23,27 @@ import java.util.Map;
  * @author Petri Kainulainen
  */
 @Component
-public class CsvJobLauncher {
+public class XmlFileToDatabaseJobLauncher {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(CsvJobLauncher.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(XmlFileToDatabaseJobLauncher.class);
 
     private final Job job;
 
     private final JobLauncher jobLauncher;
 
     @Autowired
-    CsvJobLauncher(@Qualifier("csvStudentJob") Job job, JobLauncher jobLauncher) {
+    XmlFileToDatabaseJobLauncher(@Qualifier("xmlFileToDatabaseJob") Job job, JobLauncher jobLauncher) {
         this.job = job;
         this.jobLauncher = jobLauncher;
     }
 
-    @Scheduled(cron = "${csv.job.cron}")
+    @Scheduled(cron = "${xml.job.cron}")
     void launchCSVJob() throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
-        LOGGER.info("Starting CSV job");
+        LOGGER.info("Starting XML job");
 
         jobLauncher.run(job, newExecution());
 
-        LOGGER.info("Stopping CSV job");
+        LOGGER.info("Stopping XML job");
     }
 
     private JobParameters newExecution() {
