@@ -1,4 +1,4 @@
-package net.petrikainulainen.springbatch.xml;
+package net.petrikainulainen.springbatch.xml.in;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +37,7 @@ public class XmlFileToDatabaseJobLauncher {
         this.jobLauncher = jobLauncher;
     }
 
-    @Scheduled(cron = "${xml.job.cron}")
+    @Scheduled(cron = "${xml.to.database.job.cron}")
     void launchCSVJob() throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
         LOGGER.info("Starting XML job");
 

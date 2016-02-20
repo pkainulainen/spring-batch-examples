@@ -1,4 +1,4 @@
-package net.petrikainulainen.springbatch.xml;
+package net.petrikainulainen.springbatch.xml.in;
 
 import net.petrikainulainen.springbatch.common.LoggingStudentProcessor;
 import net.petrikainulainen.springbatch.common.LoggingStudentWriter;
@@ -25,7 +25,7 @@ import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 @Configuration
 public class XmlFileToDatabaseJobConfig {
 
-    private static final String PROPERTY_XML_SOURCE_FILE_PATH = "xml.job.source.file.path";
+    private static final String PROPERTY_XML_SOURCE_FILE_PATH = "xml.to.database.job.source.file.path";
 
     @Bean
     ItemReader<StudentDTO> xmlFileItemReader(Environment environment) {
