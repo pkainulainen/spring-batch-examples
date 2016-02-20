@@ -1,4 +1,4 @@
-package net.petrikainulainen.springbatch.csv;
+package net.petrikainulainen.springbatch.csv.in;
 
 import net.petrikainulainen.springbatch.common.LoggingStudentProcessor;
 import net.petrikainulainen.springbatch.common.LoggingStudentWriter;
@@ -30,7 +30,7 @@ import org.springframework.core.io.ClassPathResource;
 @Configuration
 public class CsvFileToDatabaseJobConfig {
 
-    private static final String PROPERTY_CSV_SOURCE_FILE_PATH = "csv.job.source.file.path";
+    private static final String PROPERTY_CSV_SOURCE_FILE_PATH = "csv.to.database.job.source.file.path";
 
     @Bean
     ItemReader<StudentDTO> csvFileItemReader(Environment environment) {

@@ -1,4 +1,4 @@
-package net.petrikainulainen.springbatch.csv;
+package net.petrikainulainen.springbatch.csv.in;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +37,7 @@ public class CsvFileToDatabaseJobLauncher {
         this.jobLauncher = jobLauncher;
     }
 
-    @Scheduled(cron = "${csv.job.cron}")
+    @Scheduled(cron = "${csv.to.database.job.cron}")
     void launchCSVJob() throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
         LOGGER.info("Starting CSV job");
 
