@@ -92,5 +92,4 @@ public class DatabaseToCsvFileJobConfig {
                 .end()
                 .build();
     }
-
 }
