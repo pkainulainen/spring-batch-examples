@@ -38,12 +38,12 @@ public class XmlFileToDatabaseJobLauncher {
     }
 
     @Scheduled(cron = "${xml.to.database.job.cron}")
-    void launchCSVJob() throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
-        LOGGER.info("Starting XML job");
+    void launchXmlFileToDatabaseJob() throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
+        LOGGER.info("Starting xmlFileToDatabase job");
 
         jobLauncher.run(job, newExecution());
 
-        LOGGER.info("Stopping XML job");
+        LOGGER.info("Stopping xmlFileToDatabase job");
     }
 
     private JobParameters newExecution() {
