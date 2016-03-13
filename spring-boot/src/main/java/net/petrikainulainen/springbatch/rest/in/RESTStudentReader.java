@@ -4,9 +4,6 @@ import net.petrikainulainen.springbatch.student.StudentDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.item.ItemReader;
-import org.springframework.batch.item.NonTransientResourceException;
-import org.springframework.batch.item.ParseException;
-import org.springframework.batch.item.UnexpectedInputException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
@@ -36,7 +33,7 @@ class RESTStudentReader implements ItemReader<StudentDTO> {
     }
 
     @Override
-    public StudentDTO read() throws Exception, UnexpectedInputException, ParseException, NonTransientResourceException {
+    public StudentDTO read() throws Exception {
         LOGGER.info("Reading the information of the next student");
 
         if (studentDataIsNotInitialized()) {
