@@ -44,6 +44,8 @@ dependencies {
             'org.springframework.data:spring-data-jpa',
             'org.springframework:spring-context-support',
             'org.springframework:spring-webmvc',
+            'com.fasterxml.jackson.core:jackson-core',
+            'com.fasterxml.jackson.core:jackson-databind',
             'org.springframework:spring-oxm',
             'org.springframework.batch:spring-batch-core'
 
