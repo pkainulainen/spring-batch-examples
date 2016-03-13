@@ -39,7 +39,7 @@ class RESTStudentReader implements ItemReader<StudentDTO> {
     public StudentDTO read() throws Exception, UnexpectedInputException, ParseException, NonTransientResourceException {
         LOGGER.info("Reading the information of the next student");
 
-        if (studentDateIsNotInitialized()) {
+        if (studentDataIsNotInitialized()) {
             studentData = fetchStudentDataFromAPI();
         }
 
@@ -55,7 +55,7 @@ class RESTStudentReader implements ItemReader<StudentDTO> {
         return nextStudent;
     }
 
-    private boolean studentDateIsNotInitialized() {
+    private boolean studentDataIsNotInitialized() {
         return this.studentData == null;
     }
 
