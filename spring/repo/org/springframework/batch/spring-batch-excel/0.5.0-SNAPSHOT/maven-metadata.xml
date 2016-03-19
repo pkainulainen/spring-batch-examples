@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata modelVersion="1.1.0">
+  <groupId>org.springframework.batch</groupId>
+  <artifactId>spring-batch-excel</artifactId>
+  <version>0.5.0-SNAPSHOT</version>
+  <versioning>
+    <snapshot>
+      <timestamp>20160319.151539</timestamp>
+      <buildNumber>1</buildNumber>
+    </snapshot>
+    <lastUpdated>20160319151539</lastUpdated>
+    <snapshotVersions>
+      <snapshotVersion>
+        <extension>jar</extension>
+        <value>0.5.0-20160319.151539-1</value>
+        <updated>20160319151539</updated>
+      </snapshotVersion>
+      <snapshotVersion>
+        <extension>pom</extension>
+        <value>0.5.0-20160319.151539-1</value>
+        <updated>20160319151539</updated>
+      </snapshotVersion>
+    </snapshotVersions>
+  </versioning>
+</metadata>
