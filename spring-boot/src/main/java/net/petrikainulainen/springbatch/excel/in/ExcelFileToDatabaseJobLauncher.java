@@ -23,28 +23,28 @@ import java.util.Map;
  * @author Petri Kainulainen
  */
 @Component
-public class ExcelStudentJobLauncher {
+public class ExcelFileToDatabaseJobLauncher {
 
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ExcelStudentJobLauncher.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ExcelFileToDatabaseJobLauncher.class);
 
     private final Job job;
 
     private final JobLauncher jobLauncher;
 
     @Autowired
-    ExcelStudentJobLauncher(@Qualifier("excelStudentJob") Job job, JobLauncher jobLauncher) {
+    ExcelFileToDatabaseJobLauncher(@Qualifier("excelFileToDatabaseJob") Job job, JobLauncher jobLauncher) {
         this.job = job;
         this.jobLauncher = jobLauncher;
     }
 
     @Scheduled(cron = "${excel.to.database.job.cron}")
     void launchXmlFileToDatabaseJob() throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
-        LOGGER.info("Starting excelStudentJob job");
+        LOGGER.info("Starting excelFileToDatabase job");
 
         jobLauncher.run(job, newExecution());
 
-        LOGGER.info("Stopping excelStudentJob job");
+        LOGGER.info("Stopping excelFileToDatabase job");
     }
 
     private JobParameters newExecution() {

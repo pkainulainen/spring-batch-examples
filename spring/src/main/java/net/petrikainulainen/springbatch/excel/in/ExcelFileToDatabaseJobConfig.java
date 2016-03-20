@@ -24,7 +24,7 @@ import org.springframework.core.io.ClassPathResource;
  * @author Petri Kainulainen
  */
 @Configuration
-public class ExcelStudentJobConfig {
+public class ExcelFileToDatabaseJobConfig {
 
     private static final String PROPERTY_EXCEL_SOURCE_FILE_PATH = "excel.to.database.job.source.file.path";
 
@@ -58,7 +58,7 @@ public class ExcelStudentJobConfig {
                          ItemProcessor<StudentDTO, StudentDTO> excelStudentProcessor,
                          ItemWriter<StudentDTO> excelStudentWriter,
                          StepBuilderFactory stepBuilderFactory) {
-        return stepBuilderFactory.get("excelStudentStep")
+        return stepBuilderFactory.get("excelFileToDatabaseStep")
                 .<StudentDTO, StudentDTO>chunk(1)
                 .reader(excelStudentReader)
                 .processor(excelStudentProcessor)
@@ -69,7 +69,7 @@ public class ExcelStudentJobConfig {
     @Bean
     Job excelStudentJob(JobBuilderFactory jobBuilderFactory,
                        @Qualifier("excelStudentStep") Step excelStudentStep) {
-        return jobBuilderFactory.get("excelStudentJob")
+        return jobBuilderFactory.get("excelFileToDatabaseJob")
                 .incrementer(new RunIdIncrementer())
                 .flow(excelStudentStep)
                 .end()
