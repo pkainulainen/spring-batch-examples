@@ -26,6 +26,9 @@ targetCompatibility = 1.8
 
 repositories {
     mavenCentral()
+    maven {
+        url 'file://' + new File('repo').absolutePath
+    }
 }
 
 dependencyManagement {
@@ -47,7 +50,10 @@ dependencies {
             'com.fasterxml.jackson.core:jackson-core',
             'com.fasterxml.jackson.core:jackson-databind',
             'org.springframework:spring-oxm',
-            'org.springframework.batch:spring-batch-core'
+            'org.springframework.batch:spring-batch-core',
+            'org.springframework.batch:spring-batch-excel:0.5.0-SNAPSHOT',
+            'org.apache.poi:poi',
+            'org.apache.poi:poi-ooxml'
 
     )
     providedCompile(

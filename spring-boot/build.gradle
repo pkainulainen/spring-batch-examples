@@ -15,6 +15,9 @@ targetCompatibility = 1.8
 
 repositories {
     mavenCentral()
+    maven {
+        url 'file://' + new File('repo').absolutePath
+    }
 }
 
 dependencies {
@@ -23,7 +26,10 @@ dependencies {
             'org.springframework.boot:spring-boot-starter-batch',
             'org.springframework.boot:spring-boot-starter-data-jpa',
             'org.springframework.boot:spring-boot-starter-web',
-            'org.springframework:spring-oxm'
+            'org.springframework:spring-oxm',
+            'org.springframework.batch:spring-batch-excel:0.5.0-SNAPSHOT',
+            'org.apache.poi:poi:3.11',
+            'org.apache.poi:poi-ooxml:3.11'
     )
     runtime(
             'org.liquibase:liquibase-core',
