@@ -43,6 +43,14 @@ public class ExcelFileToDatabaseJobConfig {
         return rowMapper;
     }
 
+    /**
+     * If your Excel document has no header, you have to create a custom
+     * row mapper and configure it here.
+     */
+    /*private RowMapper<StudentDTO> excelRowMapper() {
+       return new StudentExcelRowMapper();
+    }*/
+
     @Bean
     ItemProcessor<StudentDTO, StudentDTO> excelStudentProcessor() {
         return new LoggingStudentProcessor();
