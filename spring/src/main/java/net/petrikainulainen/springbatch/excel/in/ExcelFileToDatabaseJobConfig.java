@@ -43,6 +43,14 @@ public class ExcelFileToDatabaseJobConfig {
         return rowMapper;
     }
 
+    /**
+     * If your Excel document has no header, you have to create a custom
+     * row mapper and configure it here.
+     */
+    /*private RowMapper<StudentDTO> excelRowMapper() {
+       return new StudentExcelRowMapper();
+    }*/
+
     @Bean
     ItemProcessor<StudentDTO, StudentDTO> excelStudentProcessor() {
         return new LoggingStudentProcessor();
@@ -54,7 +62,7 @@ public class ExcelFileToDatabaseJobConfig {
     }
 
     @Bean
-    Step excelStudentStep(ItemReader<StudentDTO> excelStudentReader,
+    Step excelFileToDatabaseStep(ItemReader<StudentDTO> excelStudentReader,
                          ItemProcessor<StudentDTO, StudentDTO> excelStudentProcessor,
                          ItemWriter<StudentDTO> excelStudentWriter,
                          StepBuilderFactory stepBuilderFactory) {
@@ -67,8 +75,8 @@ public class ExcelFileToDatabaseJobConfig {
     }
 
     @Bean
-    Job excelStudentJob(JobBuilderFactory jobBuilderFactory,
-                       @Qualifier("excelStudentStep") Step excelStudentStep) {
+    Job excelFileToDatabaseJob(JobBuilderFactory jobBuilderFactory,
+                       @Qualifier("excelFileToDatabaseStep") Step excelStudentStep) {
         return jobBuilderFactory.get("excelFileToDatabaseJob")
                 .incrementer(new RunIdIncrementer())
                 .flow(excelStudentStep)

@@ -33,7 +33,7 @@ public class ExcelFileToDatabaseJobLauncher {
     private final JobLauncher jobLauncher;
 
     @Autowired
-    ExcelFileToDatabaseJobLauncher(@Qualifier("excelStudentJob") Job job, JobLauncher jobLauncher) {
+    ExcelFileToDatabaseJobLauncher(@Qualifier("excelFileToDatabaseJob") Job job, JobLauncher jobLauncher) {
         this.job = job;
         this.jobLauncher = jobLauncher;
     }
