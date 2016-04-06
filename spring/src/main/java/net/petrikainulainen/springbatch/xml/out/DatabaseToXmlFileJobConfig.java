@@ -12,10 +12,14 @@ import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.database.JdbcCursorItemReader;
+import org.springframework.batch.item.xml.StaxEventItemWriter;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 
 import javax.sql.DataSource;
 
@@ -25,6 +29,7 @@ import javax.sql.DataSource;
 @Configuration
 public class DatabaseToXmlFileJobConfig {
 
+    private static final String PROPERTY_XML_EXPORT_FILE_PATH = "database.to.xml.job.export.file.path";
     private static final String QUERY_FIND_STUDENTS =
             "SELECT " +
                 "email_address, " +
@@ -50,8 +55,19 @@ public class DatabaseToXmlFileJobConfig {
     }
 
     @Bean
-    ItemWriter<StudentDTO> databaseXmlItemWriter() {
-        return new LoggingStudentWriter();
+    ItemWriter<StudentDTO> databaseXmlItemWriter(Environment environment) {
+        StaxEventItemWriter<StudentDTO> xmlFileWriter = new StaxEventItemWriter<>();
+
+        String exportFilePath = environment.getRequiredProperty(PROPERTY_XML_EXPORT_FILE_PATH);
+        xmlFileWriter.setResource(new FileSystemResource(exportFilePath));
+
+        xmlFileWriter.setRootTagName("students");
+
+        Jaxb2Marshaller studentMarshaller = new Jaxb2Marshaller();
+        studentMarshaller.setClassesToBeBound(StudentDTO.class);
+        xmlFileWriter.setMarshaller(studentMarshaller);
+
+        return xmlFileWriter;
     }
 
     @Bean
