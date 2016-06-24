@@ -108,7 +108,7 @@ public class PersistenceContext {
      * @return
      */
     @Bean
-    public NamedParameterJdbcTemplate jdbcTemplate(DataSource dataSource) {
+    NamedParameterJdbcTemplate jdbcTemplate(DataSource dataSource) {
         return new NamedParameterJdbcTemplate(dataSource);
     }
 
