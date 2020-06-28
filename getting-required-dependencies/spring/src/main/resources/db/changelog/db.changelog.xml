@@ -1,0 +1,143 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="01-create-spring-batch-tables" author="Petri Kainulainen">
+        <createSequence sequenceName="batch_step_execution_seq"/>
+        <createSequence sequenceName="batch_job_execution_seq"/>
+        <createSequence sequenceName="batch_job_seq"/>
+
+        <createTable tableName="batch_job_instance">
+            <column name="job_instance_id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="version" type="BIGINT"/>
+            <column name="job_name" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="job_key" type="VARCHAR(2500)"/>
+        </createTable>
+
+        <createTable tableName="batch_job_execution">
+            <column name="job_execution_id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="version" type="BIGINT"/>
+            <column name="job_configuration_location" type="VARCHAR(2000)"/>
+            <column name="job_instance_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="create_time" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="start_time" type="DATETIME"/>
+            <column name="end_time" type="DATETIME"/>
+            <column name="status" type="VARCHAR(10)"/>
+            <column name="exit_code" type="VARCHAR(20)"/>
+            <column name="exit_message" type="VARCHAR(2500)"/>
+            <column name="last_updated" type="DATETIME"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="batch_job_execution"
+                                 baseColumnNames="job_instance_id"
+                                 constraintName="job_instance_execution_fk"
+                                 referencedTableName="batch_job_instance"
+                                 referencedColumnNames="job_instance_id"/>
+
+        <createTable tableName="batch_job_execution_params">
+            <column name="job_execution_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="type_cd" type="VARCHAR(6)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="key_name" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="string_val" type="VARCHAR(250)"/>
+            <column name="date_val" type="DATETIME"/>
+            <column name="long_val" type="BIGINT"/>
+            <column name="double_val" type="DOUBLE PRECISION"/>
+            <column name="identifying" type="VARCHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="batch_job_execution_params"
+                                 baseColumnNames="job_execution_id"
+                                 constraintName="job_exec_params_fk"
+                                 referencedTableName="batch_job_execution"
+                                 referencedColumnNames="job_execution_id"/>
+
+        <createTable tableName="batch_job_execution_context">
+            <column name="job_execution_id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="short_context" type="VARCHAR(2500)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="serialized_context" type="CLOB"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="batch_job_execution_context"
+                                 baseColumnNames="job_execution_id"
+                                 constraintName="job_exec_ctx_fk"
+                                 referencedTableName="batch_job_execution"
+                                 referencedColumnNames="job_execution_id"/>
+
+        <createTable tableName="batch_step_execution">
+            <column name="step_execution_id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="version" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="step_name" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="job_execution_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="start_time" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="end_time" type="DATETIME"/>
+            <column name="status" type="VARCHAR(10)"/>
+            <column name="commit_count" type="BIGINT"/>
+            <column name="read_count" type="BIGINT"/>
+            <column name="filter_count" type="BIGINT"/>
+            <column name="write_count" type="BIGINT"/>
+            <column name="read_skip_count" type="BIGINT"/>
+            <column name="write_skip_count" type="BIGINT"/>
+            <column name="process_skip_count" type="BIGINT"/>
+            <column name="rollback_count" type="BIGINT"/>
+            <column name="exit_code" type="VARCHAR(20)"/>
+            <column name="exit_message" type="VARCHAR(2500)"/>
+            <column name="last_updated" type="DATETIME"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="batch_step_execution"
+                                 baseColumnNames="job_execution_id"
+                                 constraintName="job_execution_step_fk"
+                                 referencedTableName="batch_job_execution"
+                                 referencedColumnNames="job_execution_id"/>
+
+        <createTable tableName="batch_step_execution_context">
+            <column name="step_execution_id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="short_context" type="VARCHAR(2500)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="serialized_context" type="CLOB"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="batch_step_execution_context"
+                                 baseColumnNames="step_execution_id"
+                                 constraintName="step_exec_ctx_fk"
+                                 referencedTableName="batch_step_execution"
+                                 referencedColumnNames="step_execution_id"/>
+    </changeSet>
+</databaseChangeLog>
