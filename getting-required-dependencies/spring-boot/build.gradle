@@ -10,10 +10,12 @@ repositories {
 
 dependencies {
     implementation(
-            'com.h2database:h2',
-            'org.liquibase:liquibase-core',
             'org.springframework.boot:spring-boot-starter-batch',
             'org.springframework.boot:spring-boot-starter-jdbc',
             'org.springframework.boot:spring-boot-starter-web'
+    )
+    runtimeOnly(
+            'com.h2database:h2',
+            'org.liquibase:liquibase-core'
     )
 }
