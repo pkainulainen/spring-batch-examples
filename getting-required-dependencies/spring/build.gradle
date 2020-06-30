@@ -1,0 +1,47 @@
+plugins {
+    id 'org.springframework.boot' version '2.3.1.RELEASE' apply false
+    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+    id 'war'
+    id "org.gretty" version "3.0.3"
+}
+
+dependencyManagement {
+    imports {
+        mavenBom org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES
+    }
+}
+
+repositories {
+    mavenCentral()
+    //We need to use this repository because at the moment the JCenter
+    //Maven repository doesn't have the latest version (3.0.3) of the gretty-runner-jetty94
+    //dependency.
+    maven {
+        url 'https://repo.spring.io/plugins-release/'
+    }
+}
+
+dependencies {
+    implementation(
+            'org.slf4j:slf4j-api',
+            'org.liquibase:liquibase-core',
+            'com.zaxxer:HikariCP',
+            'org.springframework:spring-aspects',
+            'org.springframework:spring-context-support',
+            'org.springframework:spring-jdbc',
+            'org.springframework:spring-webmvc',
+            'org.springframework.batch:spring-batch-core'
+    )
+    runtimeOnly(
+            'org.apache.logging.log4j:log4j-api',
+            'org.apache.logging.log4j:log4j-core',
+            'org.apache.logging.log4j:log4j-slf4j-impl',
+            //We need to add this because of Gretty :( This leads
+            //into a situation where multiple SLF4J bindings
+            //are present in the classpath, but I think that
+            //this is an acceptable compromise because otherwise
+            //the application won't start.
+            'ch.qos.logback:logback-classic',
+            'com.h2database:h2'
+    )
+}

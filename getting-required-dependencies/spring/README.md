@@ -16,3 +16,9 @@ You need to install the following tools if you want to run this application:
 You can run the application by using the following command:
 
     mvn clean jetty:run
+    
+# Running the Application With Gradle
+
+You can run the application by using the following command:
+
+    gradle clean appRun    
