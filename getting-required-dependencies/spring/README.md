@@ -1,8 +1,9 @@
-# Getting the Required Dependencies With Maven - Spring Example
+# Getting the Required Dependencies - Spring Example
 
-You can read the relevant blog post by clicking the following link:
+You can read the relevant blogs post by clicking the following links:
 
 * [Spring Batch Tutorial: Getting the Required Dependencies With Maven](http://www.petrikainulainen.net/programming/spring-framework/spring-batch-tutorial-getting-the-required-dependencies-with-maven/)
+* [Spring Batch Tutorial: Getting the Required Dependencies With Gradle](https://www.petrikainulainen.net/programming/spring-framework/spring-batch-tutorial-getting-the-required-dependencies-with-gradle/)
 
 # Prerequisites
 
