@@ -14,7 +14,6 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @see  <a href="https://stackoverflow.com/a/22196362">StackOverflow answer: What's the difference between JAXB annotations put on getter versus setters versus members?</a>
  */
 @XmlRootElement(name="student")
-
 public class StudentDTO {
 
     private String emailAddress;
