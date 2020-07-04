@@ -1,0 +1,25 @@
+plugins {
+    id 'org.springframework.boot' version '2.3.1.RELEASE'
+}
+
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'java'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation(
+            'javax.xml.bind:jaxb-api',
+            'org.springframework:spring-oxm',
+            'org.springframework.boot:spring-boot-starter-batch',
+            'org.springframework.boot:spring-boot-starter-jdbc',
+            'org.springframework.boot:spring-boot-starter-web'
+    )
+    runtimeOnly(
+            'com.h2database:h2',
+            'org.liquibase:liquibase-core',
+            'org.glassfish.jaxb:jaxb-runtime'
+    )
+}
