@@ -28,7 +28,7 @@ public class DataSourceConfig {
      * @return
      */
     @Bean(destroyMethod = "close")
-    DataSource dataSource(Environment env) {
+    public DataSource dataSource(Environment env) {
         HikariConfig dataSourceConfig = new HikariConfig();
 
         dataSourceConfig.setDriverClassName(env.getRequiredProperty(PROPERTY_NAME_DB_DRIVER_CLASS));
@@ -48,7 +48,7 @@ public class DataSourceConfig {
      * @return
      */
     @Bean
-    SpringLiquibase springLiquibase(DataSource dataSource, Environment env) {
+    public SpringLiquibase springLiquibase(DataSource dataSource, Environment env) {
         SpringLiquibase liquibase = new SpringLiquibase();
         liquibase.setDataSource(dataSource);
         liquibase.setChangeLog(env.getRequiredProperty(PROPERTY_NAME_LIQUIBASE_CHANGE_LOG));

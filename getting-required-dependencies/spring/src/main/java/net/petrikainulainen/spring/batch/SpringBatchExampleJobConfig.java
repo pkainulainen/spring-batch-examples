@@ -19,12 +19,12 @@ import org.springframework.context.annotation.Configuration;
 public class SpringBatchExampleJobConfig {
 
     @Bean
-    ItemReader<String> itemReader() {
+    public ItemReader<String> itemReader() {
         return new HardCodedItemReader();
     }
 
     @Bean
-    ItemWriter<String> itemWriter() {
+    public ItemWriter<String> itemWriter() {
         return new LoggingItemWriter();
     }
 
@@ -36,7 +36,7 @@ public class SpringBatchExampleJobConfig {
      * @return
      */
     @Bean
-    Step exampleJobStep(ItemReader<String> reader,
+    public Step exampleJobStep(ItemReader<String> reader,
                         ItemWriter<String> writer,
                         StepBuilderFactory stepBuilderFactory) {
         return stepBuilderFactory.get("exampleJobStep")
@@ -53,7 +53,7 @@ public class SpringBatchExampleJobConfig {
      * @return
      */
     @Bean
-    Job exampleJob(Step exampleJobStep,
+    public Job exampleJob(Step exampleJobStep,
                    JobBuilderFactory jobBuilderFactory) {
         return jobBuilderFactory.get("exampleJob")
                 .incrementer(new RunIdIncrementer())

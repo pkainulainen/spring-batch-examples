@@ -22,7 +22,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 public class SpringBatchExampleConfig {
 
     @Bean
-    PropertySourcesPlaceholderConfigurer propertyPlaceHolderConfigurer() {
+    public PropertySourcesPlaceholderConfigurer propertyPlaceHolderConfigurer() {
         return new PropertySourcesPlaceholderConfigurer();
     }
 }
