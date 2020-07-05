@@ -22,7 +22,7 @@ import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 public class SpringBatchExampleJobConfig {
 
     @Bean
-    ItemReader<StudentDTO> itemReader() {
+    public ItemReader<StudentDTO> itemReader() {
         StaxEventItemReader<StudentDTO> xmlFileReader = new StaxEventItemReader<>();
         xmlFileReader.setResource(new ClassPathResource("data/students.xml"));
         xmlFileReader.setFragmentRootElementName("student");
@@ -35,7 +35,7 @@ public class SpringBatchExampleJobConfig {
     }
 
     @Bean
-    ItemWriter<StudentDTO> itemWriter() {
+    public ItemWriter<StudentDTO> itemWriter() {
         return new LoggingItemWriter();
     }
 
@@ -47,7 +47,7 @@ public class SpringBatchExampleJobConfig {
      * @return
      */
     @Bean
-    Step exampleJobStep(ItemReader<StudentDTO> reader,
+    public Step exampleJobStep(ItemReader<StudentDTO> reader,
                         ItemWriter<StudentDTO> writer,
                         StepBuilderFactory stepBuilderFactory) {
         return stepBuilderFactory.get("exampleJobStep")
@@ -64,7 +64,7 @@ public class SpringBatchExampleJobConfig {
      * @return
      */
     @Bean
-    Job exampleJob(Step exampleJobStep,
+    public Job exampleJob(Step exampleJobStep,
                    JobBuilderFactory jobBuilderFactory) {
         return jobBuilderFactory.get("exampleJob")
                 .incrementer(new RunIdIncrementer())
