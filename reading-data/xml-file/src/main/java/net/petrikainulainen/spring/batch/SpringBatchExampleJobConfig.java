@@ -15,8 +15,8 @@ import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 
 /**
  * This configuration class configures the Spring Batch job that
- * is used to demonstrate that our Maven and Gradle projects declare
- * all required dependencies.
+ * is used to demonstrate that our item reader reads the correct
+ * informatino from the XML file.
  */
 @Configuration
 public class SpringBatchExampleJobConfig {
