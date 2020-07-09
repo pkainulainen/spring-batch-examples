@@ -11,7 +11,7 @@ import java.util.List;
  * to a log file. The goal of this component is to help us to demonstrate
  * that our Maven and Gradle projects declare all required dependencies.
  */
-class LoggingItemWriter implements ItemWriter<StudentDTO> {
+public class LoggingItemWriter implements ItemWriter<StudentDTO> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LoggingItemWriter.class);
 
