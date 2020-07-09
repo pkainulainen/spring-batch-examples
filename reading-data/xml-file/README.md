@@ -2,7 +2,7 @@
 
 You can read the relevant blog post by clicking the following link:
 
-* [Spring Batch Tutorial: Reading Data From an XML File](http://www.petrikainulainen.net)
+* [Spring Batch Tutorial: Reading Data From an XML File](https://www.petrikainulainen.net/programming/spring-framework/spring-batch-tutorial-reading-information-from-an-xml-file/)
 
 # Prerequisites
 
