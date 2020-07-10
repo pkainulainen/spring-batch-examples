@@ -20,7 +20,7 @@ import org.springframework.core.io.ClassPathResource;
 
 /**
  * This configuration class configures the Spring Batch job that
- * is used to demonstrate that item reader reads the correct
+ * is used to demonstrate that our item reader reads the correct
  * information from the CSV file.
  */
 @Configuration
