@@ -10,7 +10,9 @@ import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.database.JdbcPagingItemReader;
 import org.springframework.batch.item.database.Order;
 import org.springframework.batch.item.database.PagingQueryProvider;
+import org.springframework.batch.item.database.builder.JdbcPagingItemReaderBuilder;
 import org.springframework.batch.item.database.support.H2PagingQueryProvider;
+import org.springframework.batch.item.database.support.SqlPagingQueryProviderFactoryBean;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,23 +31,21 @@ import java.util.Map;
 public class JDBCPaginationExampleJobConfig {
 
     @Bean
-    public ItemReader<StudentDTO> jdbcPaginationItemReader(DataSource dataSource) {
-        JdbcPagingItemReader<StudentDTO> databaseReader = new JdbcPagingItemReader<>();
-
-        databaseReader.setDataSource(dataSource);
-        databaseReader.setPageSize(1);
-
-        PagingQueryProvider queryProvider = createQueryProvider();
-        databaseReader.setQueryProvider(queryProvider);
-
-        databaseReader.setRowMapper(new BeanPropertyRowMapper<>(StudentDTO.class));
-
-        return databaseReader;
+    public ItemReader<StudentDTO> jdbcPaginationItemReader(DataSource dataSource, PagingQueryProvider queryProvider) {
+        return new JdbcPagingItemReaderBuilder<StudentDTO>()
+                .name("pagingItemReader")
+                .dataSource(dataSource)
+                .pageSize(1)
+                .queryProvider(queryProvider)
+                .rowMapper(new BeanPropertyRowMapper<>(StudentDTO.class))
+                .build();
     }
 
-    private PagingQueryProvider createQueryProvider() {
-        H2PagingQueryProvider queryProvider = new H2PagingQueryProvider();
+    @Bean
+    public SqlPagingQueryProviderFactoryBean queryProvider(DataSource dataSource) {
+        SqlPagingQueryProviderFactoryBean queryProvider = new SqlPagingQueryProviderFactoryBean();
 
+        queryProvider.setDataSource(dataSource);
         queryProvider.setSelectClause("SELECT email_address, name, purchased_package");
         queryProvider.setFromClause("FROM students");
         queryProvider.setSortKeys(sortByEmailAddressAsc());
