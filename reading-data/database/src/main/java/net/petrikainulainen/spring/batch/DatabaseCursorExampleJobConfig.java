@@ -34,6 +34,7 @@ public class DatabaseCursorExampleJobConfig {
     @Bean
     public ItemReader<StudentDTO> databaseCursorItemReader(DataSource dataSource) {
         return new JdbcCursorItemReaderBuilder<StudentDTO>()
+                .name("cursorItemReader")
                 .dataSource(dataSource)
                 .sql(QUERY_FIND_STUDENTS)
                 .rowMapper(new BeanPropertyRowMapper<>(StudentDTO.class))
