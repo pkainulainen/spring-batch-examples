@@ -7,7 +7,7 @@ import org.springframework.batch.core.configuration.annotation.StepBuilderFactor
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
-import org.springframework.batch.item.database.JdbcCursorItemReader;
+import org.springframework.batch.item.database.builder.JdbcCursorItemReaderBuilder;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,18 +28,16 @@ public class DatabaseCursorExampleJobConfig {
                     "email_address, " +
                     "name, " +
                     "purchased_package " +
-                    "FROM STUDENTS " +
-                    "ORDER BY email_address ASC";
+            "FROM STUDENTS " +
+            "ORDER BY email_address ASC";
 
     @Bean
     public ItemReader<StudentDTO> databaseCursorItemReader(DataSource dataSource) {
-        JdbcCursorItemReader<StudentDTO> databaseReader = new JdbcCursorItemReader<>();
-
-        databaseReader.setDataSource(dataSource);
-        databaseReader.setSql(QUERY_FIND_STUDENTS);
-        databaseReader.setRowMapper(new BeanPropertyRowMapper<>(StudentDTO.class));
-
-        return databaseReader;
+        return new JdbcCursorItemReaderBuilder<StudentDTO>()
+                .dataSource(dataSource)
+                .sql(QUERY_FIND_STUDENTS)
+                .rowMapper(new BeanPropertyRowMapper<>(StudentDTO.class))
+                .build();
     }
 
     @Bean
