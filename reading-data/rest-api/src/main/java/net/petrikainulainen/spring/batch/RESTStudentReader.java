@@ -47,6 +47,7 @@ class RESTStudentReader implements ItemReader<StudentDTO> {
         }
         else {
             nextStudentIndex = 0;
+            studentData = null;
         }
 
         LOGGER.info("Found student: {}", nextStudent);
