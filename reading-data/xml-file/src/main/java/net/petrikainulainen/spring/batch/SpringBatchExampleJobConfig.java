@@ -7,7 +7,7 @@ import org.springframework.batch.core.configuration.annotation.StepBuilderFactor
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
-import org.springframework.batch.item.xml.StaxEventItemReader;
+import org.springframework.batch.item.xml.builder.StaxEventItemReaderBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
@@ -23,15 +23,15 @@ public class SpringBatchExampleJobConfig {
 
     @Bean
     public ItemReader<StudentDTO> itemReader() {
-        StaxEventItemReader<StudentDTO> xmlFileReader = new StaxEventItemReader<>();
-        xmlFileReader.setResource(new ClassPathResource("data/students.xml"));
-        xmlFileReader.setFragmentRootElementName("student");
-
         Jaxb2Marshaller studentMarshaller = new Jaxb2Marshaller();
         studentMarshaller.setClassesToBeBound(StudentDTO.class);
-        xmlFileReader.setUnmarshaller(studentMarshaller);
 
-        return xmlFileReader;
+        return new StaxEventItemReaderBuilder<StudentDTO>()
+                .name("studentReader")
+                .resource(new ClassPathResource("data/students.xml"))
+                .addFragmentRootElements("student")
+                .unmarshaller(studentMarshaller)
+                .build();
     }
 
     @Bean
