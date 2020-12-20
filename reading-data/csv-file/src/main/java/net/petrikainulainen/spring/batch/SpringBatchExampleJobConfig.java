@@ -7,8 +7,8 @@ import org.springframework.batch.core.configuration.annotation.StepBuilderFactor
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
-import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.batch.item.file.LineMapper;
+import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
 import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
 import org.springframework.batch.item.file.mapping.DefaultLineMapper;
 import org.springframework.batch.item.file.mapping.FieldSetMapper;
@@ -28,14 +28,14 @@ public class SpringBatchExampleJobConfig {
 
     @Bean
     public ItemReader<StudentDTO> itemReader() {
-        FlatFileItemReader<StudentDTO> csvFileReader = new FlatFileItemReader<>();
-        csvFileReader.setResource(new ClassPathResource("data/students.csv"));
-        csvFileReader.setLinesToSkip(1);
-
         LineMapper<StudentDTO> studentLineMapper = createStudentLineMapper();
-        csvFileReader.setLineMapper(studentLineMapper);
 
-        return csvFileReader;
+        return new FlatFileItemReaderBuilder<StudentDTO>()
+                .name("studentReader")
+                .resource(new ClassPathResource("data/students.csv"))
+                .linesToSkip(1)
+                .lineMapper(studentLineMapper)
+                .build();
     }
 
     private LineMapper<StudentDTO> createStudentLineMapper() {
