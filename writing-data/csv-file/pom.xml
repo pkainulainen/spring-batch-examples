@@ -15,7 +15,7 @@
     </parent>
 
     <properties>
-        <jdk.version>14</jdk.version>
+        <jdk.version>15</jdk.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
